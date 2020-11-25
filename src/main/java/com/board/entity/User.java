@@ -2,7 +2,6 @@ package com.board.entity;
 
 import com.board.entity.enums.Role;
 import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,13 +10,12 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-//@ToString(exclude = "roles")
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int id;
 
@@ -48,9 +46,8 @@ public class User {
     @JoinColumn(name = "address_fk_id")
     private Address address;
 
-    @ElementCollection(fetch = FetchType.LAZY, targetClass = Role.class)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "users_roles", joinColumns = @JoinColumn(name = "FK_users_roles_users"))
-    @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
 }

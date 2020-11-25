@@ -2,17 +2,12 @@ package com.board.service.impl;
 
 import com.board.entity.Announcement;
 import com.board.repository.CRUDRepository;
+import com.board.repository.impl.AnnouncementRepositoryImpl;
 import com.board.service.AnnouncementService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
 public class AnnouncementServiceImpl implements AnnouncementService{
 
-    @Autowired
-    @Qualifier(value = "announcementRepositoryImpl")
-    private CRUDRepository<Announcement> repository;
+    private CRUDRepository<Announcement> repository = new AnnouncementRepositoryImpl();
 
     @Override
     public void save(Announcement announcement) {

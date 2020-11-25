@@ -1,33 +1,50 @@
 package com.board;
 
-import com.board.config.WebAppConfig;
+//import com.board.config.WebAppConfig;
+
+import com.board.entity.Address;
+import com.board.entity.Email;
+import com.board.entity.Phone;
+import com.board.entity.User;
+import com.board.entity.enums.Role;
 import com.board.service.UserService;
 import com.board.service.impl.UserServiceImpl;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class TestBoard {
     public static void main(String[] args) {
 
+
+ /*
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(WebAppConfig.class);
         UserService userService = context.getBean(UserServiceImpl.class);
-        System.out.println(userService.findById(1));
-        //userService.findById(1);
+//        System.out.println(userService.findById(1));
+        userService.findById(1);
 
+*/
 
         // CATEGORY SERVICE
+
 /*
 
-        CategoryService categoryService = new CategoryServiceImpl(new CategoryRepositoryImpl());
+        CategoryService categoryService = new CategoryServiceImpl();
 
+        */
+/*
         Category category = new Category();
         category.setCategoryName("Category name");
+        *//*
+
 
         //categoryService.save(category);                                                   //save Category
-        //System.out.println("Category  : "+ categoryService.findById(10).toString());      //GET Category
-        Category updateCat = categoryService.findById(10);
+        //System.out.println("Category  : "+ categoryService.findById(1));                   //GET Category
+        */
+/*
+        Category updateCat = categoryService.findById(1);
         updateCat.setCategoryName("Updated category name");                                //Update Category
         categoryService.update(updateCat);
-        //categoryService.deleteById(10);                                                   //DELETE CATEGORY
+        *//*
+
+        //categoryService.deleteById(1);                                                   //DELETE CATEGORY
 
 */
 
@@ -35,11 +52,12 @@ public class TestBoard {
 
         // USER SERVICE
 
-/*
-
-        UserService userService = new UserServiceImpl(new UserRepositoryImpl());
+        UserService userService = new UserServiceImpl();
 
         User user = new User();
+
+        Role userRole = Role.ROLE_USER;
+        user.getRoles().add(userRole);
 
         user.setFirstName("First name");
         user.setLastName("Last name");
@@ -58,7 +76,6 @@ public class TestBoard {
         user.getPhones().add(phone);
 
 
-
         Address address = new Address();
         address.setCity("Lviv");
         address.setStreet("Zelena");
@@ -67,56 +84,61 @@ public class TestBoard {
         user.setAddress(address);
 
         //userService.save(user);                                                        //SAVE USER
-        //System.out.println("User : " + userService.findById(1).toString());            //GET USER
+        //System.out.println("User : " + userService.findById(20));            //GET USER
 
-        //User updatedUser = userService.findById(6);
+        /*User updatedUser = userService.findById(21);
 
-        *//*updatedUser.setEmail(email);
-        userService.update(updatedUser);*//*                                               //UPDATE USER's EMAIL
+        email.setEmail("firstEmail@ukr.net");
+        updatedUser.setEmail(email);
+        userService.update(updatedUser);                                               //UPDATE USER's EMAIL
+
+        phone.setNumber("7654321");
+        phone.setOperator("050");
+        updatedUser.getPhones().add(phone);
+        userService.update(updatedUser);                                               //UPDATE USER's PHONE
+
+        address.setCity("Kyiv");
+        address.setPostCode(33333);
+        address.setStreet("Franka");
+        address.setRegion("Kyiv region");
+        updatedUser.setAddress(address);
+        userService.update(updatedUser);*/                                               //UPDATE USER's ADDRESS
+
+        //userService.deleteById(21);                                                     //DELETE USER BY ID
 
 
-         *//*updatedUser.getPhones().add(phone);
-        userService.update(updatedUser);*//*                                               //UPDATE USER's PHONE
-
-
-         *//*updatedUser.setAddress(address);
-        userService.update(updatedUser);*//*                                               //UPDATE USER's ADDRESS
-
-        //userService.deleteById(17);                                                     //DELETE USER BY ID
-
-
- */
 
         //----------------------------------------------------------------------------------------------------------
 
         // Announcement Service
-/*
-        AnnouncementService announcementService = new AnnouncementServiceImpl(new AnnouncementRepositoryImpl());
-        CategoryService categoryService = new CategoryServiceImpl(new CategoryRepositoryImpl());
 
-        Announcement announcement = new Announcement();
+ /*
+        AnnouncementService announcementService = new AnnouncementServiceImpl();
+        CategoryService categoryService = new CategoryServiceImpl();
+
+        *//*Announcement announcement = new Announcement();
         Category category = new Category();
-        category.setCategoryName("Category name");
+        category.setCategoryName("Some Category");
         announcement.setCategory(category);
         announcement.setTitle("Title");
-        announcement.setPrice(100);
-        announcement.setText("Description");
+        announcement.setPrice(new BigDecimal(100));
+        announcement.setText("Description");*//*
 
 
-        categoryService.save(category);
-        announcementService.save(announcement);                                                   //SAVE ANNOUNCEMENT
-        //System.out.println(" Announcement :  "  + announcementService.findById(13).toString());   //GET  ANNOUNCEMENT
+        //categoryService.save(category);
+        //announcementService.save(announcement);                                                   //SAVE ANNOUNCEMENT
+        //System.out.println(" Announcement :  "  + announcementService.findById(2).toString());   //GET  ANNOUNCEMENT
 
-        Announcement newAnnouncement = announcementService.findById(13);
-        newAnnouncement.setPrice(150);
+        *//*Announcement newAnnouncement = announcementService.findById(2);
+        newAnnouncement.setPrice(new BigDecimal(150));
         newAnnouncement.setTitle("New Title ");
-        announcementService.update(newAnnouncement);                                            //UPDATE ANNOUNCEMENT
-        announcementService.deleteById(13);                                                     //DELETE ANNOUNCEMENT
-        categoryService.deleteById(12);
+        newAnnouncement.setText("New description");
+        announcementService.update(newAnnouncement); *//*                                           //UPDATE ANNOUNCEMENT
+        //announcementService.deleteById(2);                                                     //DELETE ANNOUNCEMENT
+        //categoryService.deleteById(2);
 
- */
 
-
+*/
     }
 }
 

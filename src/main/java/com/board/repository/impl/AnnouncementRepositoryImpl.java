@@ -2,48 +2,46 @@ package com.board.repository.impl;
 
 import com.board.entity.Announcement;
 import com.board.repository.CRUDRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import com.board.util.EntityManagerUtil;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
-@Repository
-@Transactional
 public class AnnouncementRepositoryImpl implements CRUDRepository<Announcement> {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    @PersistenceUnit
-    private EntityManagerFactory factory;
 
     @Override
     public void create(Announcement announcement) {
-        em.persist(announcement);
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(announcement);
+        entityManager.getTransaction().commit();
     }
 
     @Override
     public Announcement findById(int id) {
-
-        TypedQuery<Announcement> query = em.createQuery("FROM Announcement a WHERE a.id = :aId",
-                                                        Announcement.class);
-        query.setParameter("aId", id);
-
-        return query.getSingleResult();
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        return entityManager.find(Announcement.class,id);
     }
 
     @Override
     public void update(Announcement announcement) {
 
-        Announcement mergeAnnouncement = em.merge(announcement);
-        em.persist(mergeAnnouncement);
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        Announcement newAnnouncement = entityManager.merge(announcement);
+        entityManager.persist(newAnnouncement);
+        entityManager.getTransaction().commit();
+
     }
 
     @Override
     public void deleteById(int id) {
 
-        Query query = em.createQuery("DELETE FROM Announcement a WHERE a.id = :aId");
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createQuery("DELETE FROM Announcement a WHERE a.id = :aId");
         query.setParameter("aId", id);
         System.out.println("Deleted rows = " + query.executeUpdate());
+        entityManager.getTransaction().commit();
     }
 }

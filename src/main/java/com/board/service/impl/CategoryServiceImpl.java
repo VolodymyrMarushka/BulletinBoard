@@ -2,17 +2,12 @@ package com.board.service.impl;
 
 import com.board.entity.Category;
 import com.board.repository.CRUDRepository;
+import com.board.repository.impl.CategoryRepositoryImpl;
 import com.board.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-@Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
-    @Qualifier(value = "categoryRepositoryImpl")
-    private CRUDRepository<Category> repository;
+    private CRUDRepository<Category> repository = new CategoryRepositoryImpl();
 
     @Override
     public void save(Category category) {

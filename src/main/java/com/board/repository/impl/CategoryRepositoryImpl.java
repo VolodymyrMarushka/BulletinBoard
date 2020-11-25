@@ -2,44 +2,52 @@ package com.board.repository.impl;
 
 import com.board.entity.Category;
 import com.board.repository.CRUDRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import com.board.util.EntityManagerUtil;
+import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
-@Repository
-@Transactional
+@Data
 public class CategoryRepositoryImpl implements CRUDRepository<Category> {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    @PersistenceUnit
-    private EntityManagerFactory factory;
 
     @Override
     public void create(Category category) {
-        em.persist(category);
+
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(category);
+        transaction.commit();
+
     }
 
     @Override
     public Category findById(int id) {
-        TypedQuery<Category> query = em.createQuery("FROM Category c WHERE c.id = :cId", Category.class);
-        query.setParameter("cId", id);
-        return query.getSingleResult();
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        Category category = entityManager.find(Category.class, id);
+        return category;
     }
 
     @Override
     public void update(Category category) {
-
-        Category mergeCategory = em.merge(category);
-        em.persist(mergeCategory);
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        Category updatedCategory = entityManager.merge(category);
+        entityManager.persist(category);
+        entityManager.getTransaction().commit();
     }
 
 
     @Override
     public void deleteById(int id) {
-        Category category = em.getReference(Category.class, id);
-        em.remove(category);
+        EntityManager entityManager = EntityManagerUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Query query = entityManager.createQuery("DELETE FROM Category c WHERE c.id = :cId");
+        query.setParameter("cId", id);
+        System.out.println("Deleted rows = " + query.executeUpdate());
+        transaction.commit();
     }
 }

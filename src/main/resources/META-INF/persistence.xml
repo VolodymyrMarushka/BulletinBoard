@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+
+    <persistence-unit name="bulletinBoard-dev" transaction-type="RESOURCE_LOCAL">
+
+        <description>Hibernate configuration</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.board.entity.User</class>
+        <class>com.board.entity.Email</class>
+        <class>com.board.entity.Phone</class>
+        <class>com.board.entity.Address</class>
+        <class>com.board.entity.Announcement</class>
+        <class>com.board.entity.Category</class>
+        <!--<class>com.lessons.Country</class>-->
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/board?serverTimezone=Europe/Kiev"/>
+            <!--<property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/learn_hibernate?serverTimezone=Europe/Kiev"/>-->
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="root"/>
+
+            <!--Hibernate properties-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>
